@@ -57,8 +57,9 @@ try:
 except TelegramError as e:
     print(f"❌ Ошибка при тестовой отправке: {e}")
 
+send_daily_quiz()
 # Расписание: 22:18 по Алматы = 17:18 UTC
-schedule.every().day.at("17:18").do(send_daily_quiz)
+# schedule.every().day.at("17:18").do(send_daily_quiz)
 
 print("👀 Бот работает, ждёт расписания...")
 
