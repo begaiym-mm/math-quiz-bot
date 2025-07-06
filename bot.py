@@ -5,24 +5,32 @@ import time
 from telegram import Bot
 from telegram.error import TelegramError
 
+# Получение переменных окружения
 TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 
+# Проверка на наличие токена и канала
+if not TOKEN or not CHANNEL_ID:
+    print("❌ BOT_TOKEN или CHANNEL_ID не заданы в Heroku → Settings → Config Vars")
+    exit(1)
+
 bot = Bot(token=TOKEN)
 
+# Список викторин
 quiz_data = [
     {
-        "question": "Какой язык программирования используется для Telegram-ботов?",
-        "options": ["Python", "HTML", "CSS", "Photoshop"],
-        "correct_option_id": 0
+        "question": "Сколько планет в Солнечной системе?",
+        "options": ["7", "8", "9", "10"],
+        "correct_option_id": 1
     },
     {
-        "question": "Сколько дней в високосном году?",
-        "options": ["365", "366", "364", "360"],
-        "correct_option_id": 1
+        "question": "Что такое H2O?",
+        "options": ["Кислород", "Водород", "Вода", "Азот"],
+        "correct_option_id": 2
     }
 ]
 
+# Функция отправки викторины
 def send_daily_quiz():
     quiz = random.choice(quiz_data)
     try:
@@ -37,12 +45,22 @@ def send_daily_quiz():
         print("✅ Куиз отправлен.")
     except TelegramError as e:
         print(f"❌ Ошибка отправки: {e}")
+    except Exception as ex:
+        print(f"❌ Другая ошибка: {ex}")
 
-send_daily_quiz()
-#schedule.every().day.at("17:20").do(send_daily_quiz)
+# Временная отправка тест-сообщения (можно убрать позже)
+try:
+    bot.send_message(chat_id=CHANNEL_ID, text="✅ Бот запущен. Это тестовое сообщение.")
+    print("✅ Тестовое сообщение отправлено.")
+except TelegramError as e:
+    print(f"❌ Ошибка при тестовой отправке: {e}")
 
-print("👀 Бот запущен на Heroku")
+# Расписание: 22:18 по Алматы = 17:18 UTC
+schedule.every().day.at("17:18").do(send_daily_quiz)
 
+print("👀 Бот работает, ждёт расписания...")
+
+# Главный цикл
 while True:
     schedule.run_pending()
     time.sleep(30)
