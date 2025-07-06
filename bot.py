@@ -42,7 +42,7 @@ def send_daily_quiz():
             options=quiz["options"],
             type='quiz',
             correct_option_id=quiz["correct_option_id"],
-            is_anonymous=False
+            is_anonymous=True
         )
         print("✅ Куиз отправлен.")
     except TelegramError as e:
