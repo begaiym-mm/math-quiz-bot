@@ -38,7 +38,7 @@ def send_daily_quiz():
     except TelegramError as e:
         print(f"❌ Ошибка отправки: {e}")
 
-schedule.every().day.at("10:00").do(send_daily_quiz)
+schedule.every().day.at("17:18").do(send_daily_quiz)
 
 print("👀 Бот запущен на Heroku")
 
