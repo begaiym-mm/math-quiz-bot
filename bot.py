@@ -5,6 +5,7 @@ import time
 from telegram import Bot
 from telegram.error import TelegramError
 
+
 # Получение переменных окружения
 TOKEN = os.getenv("BOT_TOKEN")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
