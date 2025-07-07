@@ -73,7 +73,7 @@ def send_daily_quiz():
         print(f"❌ Error sending quiz: {e}")
 
 # === Schedule the task daily at 17:18 UTC (22:18 Almaty) ===
-schedule.every().day.at("13:40").do(send_daily_quiz)
+schedule.every().day.at("14:42").do(send_daily_quiz)
 
 print("👀 Bot is running and waiting for schedule...")
 
